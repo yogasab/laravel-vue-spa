@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Tymon\JWTAuth\JWTAuth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
@@ -31,14 +32,14 @@ class AuthController extends Controller
   {
     $credentials = request(['email', 'password']);
 
-    if (!$token = auth()->attempt($credentials)) {
+    if (!$token = Auth::attempt($credentials)) {
       return response()->json(['error' => 'Unauthorized'], 401);
     }
 
     return $this->respondWithToken($token);
   }
 
-  public function register()
+  public function register(Request $request)
   {
     $validator  = Validator::make(request()->all(), [
       'name' => 'required',
@@ -48,12 +49,9 @@ class AuthController extends Controller
     if ($validator->fails()) {
       return response()->json($validator->errors());
     }
-    $user = User::create(array_merge($validator->validated(), ['password' => bcrypt(request()->password)]));
-
-    return response()->json([
-      'message' => 'User successfully registered',
-      'user' => $user
-    ], 201);
+    // $user = User::create(array_merge($validator->validated(), ['password' => bcrypt(request()->password)]));
+    $user = User::create($validator->validated());
+    return $this->login($request);
   }
 
   /**
@@ -73,8 +71,7 @@ class AuthController extends Controller
    */
   public function logout()
   {
-    auth()->logout();
-
+    Auth::logout();
     return response()->json(['message' => 'Successfully logged out']);
   }
 
