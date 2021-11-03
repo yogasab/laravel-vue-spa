@@ -14,12 +14,18 @@
         <v-btn type="submit" color="green">
           Login
         </v-btn>
+        <router-link to="/register">
+          <v-btn color="blue">
+            Register
+          </v-btn>
+        </router-link>
       </v-col>
     </v-container>
   </v-form>
 </template>
 
 <script>
+import User from '../Helpers/User'
 export default {
   data(){
     return {
@@ -32,6 +38,12 @@ export default {
   methods: {
     login(){
       User.login(this.form)
+      this.$router.push({name: 'forum'})
+    }
+  },
+  created(){
+    if(User.loggedIn()){
+      this.$router.push({name: 'forum'})
     }
   }
 }

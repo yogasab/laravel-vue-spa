@@ -3,22 +3,31 @@
     <v-toolbar-title>Single Forum App</v-toolbar-title>
     <v-spacer></v-spacer>
     <div class="hidden-sm-and-down">
-      <router-link to="/forum">
-        <v-btn >Forum</v-btn>
-      </router-link>
-      <!-- 
-      <v-btn elevation="2">Ask Question</v-btn>
-      <v-btn elevation="2">Category</v-btn>
-      <v-btn elevation="2">Register</v-btn> -->
-      <router-link to="/login">
-        <v-btn >Login</v-btn>
+      <router-link v-for="item in items" :to="item.to" :key="item.title">
+        <v-btn v-if="item.show">{{ item.title }}</v-btn>
       </router-link>
     </div>
   </v-toolbar>
 </template>
 
 <script>
+import User from '../Helpers/User'
 export default {
-  
+  data(){
+    return {
+      items: [
+        {title: 'Forum', to: '/forum', show: true},
+        {title: 'Login', to: '/login', show: !User.loggedIn()},
+        {title: 'Logout', to: '/logout', show: User.loggedIn()},
+        {title: 'Ask Question', to: '/question', show: User.loggedIn()},
+        {title: 'Category', to: '/category', show: User.loggedIn()},
+      ]
+    }
+  },
+  created(){
+    EventBus.$on('logout', () => {
+      User.loggedOut();
+    })
+  }
 }
 </script>

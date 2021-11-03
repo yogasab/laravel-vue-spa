@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\RegisterRequest;
 use App\User;
 use Tymon\JWTAuth\JWTAuth;
 use Illuminate\Http\Request;
@@ -39,18 +40,9 @@ class AuthController extends Controller
     return $this->respondWithToken($token);
   }
 
-  public function register(Request $request)
+  public function register(RegisterRequest $request)
   {
-    $validator  = Validator::make(request()->all(), [
-      'name' => 'required',
-      'email' => 'required|unique:users',
-      'password' => 'required|confirmed'
-    ]);
-    if ($validator->fails()) {
-      return response()->json($validator->errors());
-    }
-    // $user = User::create(array_merge($validator->validated(), ['password' => bcrypt(request()->password)]));
-    $user = User::create($validator->validated());
+    User::create($request->all());
     return $this->login($request);
   }
 
