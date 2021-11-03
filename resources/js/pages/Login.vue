@@ -31,9 +31,7 @@ export default {
   },
   methods: {
     login(){
-      axios.post('/api/auth/login', this.form)
-      .then((res) => console.log(res.data.access_token))
-      .catch((err) => console.log(err.response.data))
+      User.login(this.form)
     }
   }
 }
