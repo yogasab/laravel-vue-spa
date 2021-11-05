@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\QuestionRequest;
 use App\Model\Question;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\QuestionRequest;
 use App\Http\Resources\QuestionResource;
+use Illuminate\Http\Response;
 
 class QuestionController extends Controller
 {
@@ -34,9 +37,12 @@ class QuestionController extends Controller
    */
   public function store(QuestionRequest $request)
   {
-    $validatedData = $request->all();
-    $question = Question::create($validatedData);
-    return response($question);
+    // $validatedData = $request->all();
+    // $validatedData['slug'] = Str::slug($request->title);
+    // $validatedData['user_id'] = Auth::user()->id;
+    // $question = Question::create($validatedData);
+    $question = Auth::user()->questions()->create($request->all());
+    return response(new QuestionResource($question), Response::HTTP_CREATED);
   }
 
   /**

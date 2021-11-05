@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import User from '../Helpers/User'
+import User from '../../helpers/User'
 export default {
   data(){
     return {
@@ -38,7 +38,7 @@ export default {
   methods: {
     login(){
       User.login(this.form)
-      this.$router.push({name: 'forum'})
+      // this.$router.push({name: 'forum'})
     }
   },
   created(){

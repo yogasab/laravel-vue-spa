@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import User from '../Helpers/User'
+import User from '../helpers/User'
 export default {
   data(){
     return {
@@ -19,7 +19,7 @@ export default {
         {title: 'Forum', to: '/forum', show: true},
         {title: 'Login', to: '/login', show: !User.loggedIn()},
         {title: 'Logout', to: '/logout', show: User.loggedIn()},
-        {title: 'Ask Question', to: '/question', show: User.loggedIn()},
+        {title: 'Ask Question', to: '/ask', show: User.loggedIn()},
         {title: 'Category', to: '/category', show: User.loggedIn()},
       ]
     }

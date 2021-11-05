@@ -1,9 +1,9 @@
 require('./bootstrap');
 
-import vuetify from './vuetify'
-import router from './Router/router'
-import User from './Helpers/User'
 import Vue from 'vue';
+import vuetify from './vuetify'
+import router from './router/router'
+import User from './Helpers/User'
 
 window.Vue = require('vue');
 window.User = User;

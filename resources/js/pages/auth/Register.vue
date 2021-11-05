@@ -29,7 +29,7 @@
 
 <script>
 
-import User from '../Helpers/User'
+import User from '../../helpers/User'
 
 export default {
   data(){

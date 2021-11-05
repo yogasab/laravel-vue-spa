@@ -30,7 +30,6 @@ class User {
     if(storedToken){
       return Token.isValid(storedToken) ? true: false;
     }
-    return false;
   }
 
   loggedIn(){
@@ -53,7 +52,12 @@ class User {
       const payload = Token.payload(AppStorage.getToken());
       return payload.sub;
     }
-    return false;
+  }
+
+  owned(user_id){
+    console.log(this.id());
+    console.log(user_id);
+    return this.id() == user_id;
   }
 }
 
