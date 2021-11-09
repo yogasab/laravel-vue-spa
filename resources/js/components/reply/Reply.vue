@@ -12,6 +12,9 @@
         <v-list-item-action>
           <v-list-item-action-text v-text="data.created_at"></v-list-item-action-text>
         </v-list-item-action>
+        <v-list-item-action>
+          <like :content="data"></like>
+        </v-list-item-action>
       </v-list-item>
       <v-divider></v-divider>
 
@@ -28,9 +31,10 @@
 </template>
 <script>
 import User from '../../helpers/User'
+import Like from '../likes/Like.vue'
 import EditReply from './EditReply.vue'
 export default {
-  components: { EditReply },
+  components: { EditReply, Like },
   props: ['data', 'index'],
   data(){
     return {

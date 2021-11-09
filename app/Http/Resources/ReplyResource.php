@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 
 class ReplyResource extends JsonResource
 {
@@ -20,6 +21,8 @@ class ReplyResource extends JsonResource
       'user' => $this->user->name,
       'user_id' => $this->user->id,
       'question_slug' => $this->question->slug,
+      'total_like' => $this->likes->count(),
+      'liked' => !!$this->likes->where('user_id', Auth::id())->count(),
       'created_at' => $this->created_at->diffForHumans()
     ];
   }

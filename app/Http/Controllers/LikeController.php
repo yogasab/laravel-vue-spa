@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\Like;
 use App\Model\Reply;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LikeController extends Controller
 {
@@ -18,7 +19,7 @@ class LikeController extends Controller
   public function likeReply(Reply $reply)
   {
     $reply->likes()->create([
-      'user_id' => '1'
+      'user_id' => Auth::id()
     ]);
     return response()->json([
       'message' => 'Like successfully'
@@ -27,7 +28,7 @@ class LikeController extends Controller
 
   public function dislikeReply(Reply $reply)
   {
-    $reply->likes()->where('user_id', '1')->first()->delete();
+    $reply->likes()->where('user_id', Auth::id())->first()->delete();
     return response()->json([
       'message' => 'Dislike successfully'
     ]);
