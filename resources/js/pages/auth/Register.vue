@@ -6,7 +6,7 @@
         sm="6"
         md="12"
         >
-        <h3>Sign Up</h3>
+        <h3>Register</h3>
         <v-text-field label="Name" required type="text" v-model="form.name"/>
         <span class="red--text" v-if="errors.name">Name field is required</span>
         <v-text-field label="Email" required type="email" v-model="form.email"/>

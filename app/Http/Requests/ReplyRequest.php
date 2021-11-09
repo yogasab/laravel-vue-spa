@@ -25,8 +25,6 @@ class ReplyRequest extends FormRequest
   {
     return [
       'body' => 'required',
-      'question_id' => 'required',
-      'user_id' => 'required'
     ];
   }
 }

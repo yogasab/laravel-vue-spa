@@ -18,12 +18,7 @@
           label="Categories" 
           autocomplete>
         </v-select>
-        <v-textarea 
-          name="input-7-1" 
-          label="Question" 
-          v-model="form.body" 
-          hint="Put your question here"
-        ></v-textarea>
+        <ckeditor :editor="editor" v-model="form.body"></ckeditor>
         <v-spacer></v-spacer>
         <v-btn type="submit" color="green">
           Create
@@ -36,7 +31,8 @@
 
 <script>
 import Axios from 'axios';
-
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import CKEditor from '@ckeditor/ckeditor5-vue2';
 export default {
   data(){
     return {
@@ -46,8 +42,13 @@ export default {
         body: null
       },
       categories: [],
-      errror: {}
+      errror: {},
+      editor: ClassicEditor,
     }
+  },
+  components: {
+    // Use the <ckeditor> component in this view.
+    ckeditor: CKEditor.component
   },
   async created(){
     await Axios.get('/api/category')
@@ -62,7 +63,7 @@ export default {
         this.form.category_id = null;
         this.form.body = null;
         this.$router.push(res.data.path)
-        console.log(res.data)
+        // console.log(res.data)
       })
       .catch(err => alert(err))
     }
