@@ -6,6 +6,7 @@ use App\Http\Requests\ReplyRequest;
 use App\Http\Resources\ReplyResource;
 use App\Model\Question;
 use App\Model\Reply;
+use App\Notifications\NewReplyNotification;
 use Illuminate\Http\Request;
 
 class ReplyController extends Controller
@@ -36,10 +37,14 @@ class ReplyController extends Controller
   public function store(ReplyRequest $request, Question $question)
   {
     $validatedData = $request->all();
-    $question->replies()->create($validatedData);
+    $reply = $question->replies()->create($validatedData);
+    $user = $question->user;
+    if ($reply->user_id !== $question->user_id) {
+      $user->notify(new NewReplyNotification($reply));
+    }
     return response()->json([
       'success' => true,
-      'data' => $validatedData,
+      'data' => $reply,
       'message' => 'New reply created successfully'
     ]);
   }

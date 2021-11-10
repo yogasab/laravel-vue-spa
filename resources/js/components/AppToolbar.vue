@@ -3,6 +3,7 @@
     <v-toolbar-title>Single Forum App</v-toolbar-title>
     <v-spacer></v-spacer>
     <div class="hidden-sm-and-down">
+      <app-notifications class="mr-3"></app-notifications>
       <router-link v-for="item in items" :to="item.to" :key="item.title">
         <v-btn v-if="item.show" class="mr-4">{{ item.title }}</v-btn>
       </router-link>
@@ -12,7 +13,9 @@
 
 <script>
 import User from '../helpers/User'
+import AppNotifications from './AppNotifications.vue'
 export default {
+  components: { AppNotifications },
   data(){
     return {
       items: [
