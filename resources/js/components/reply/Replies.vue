@@ -20,12 +20,12 @@
 <script>
 import Axios from 'axios';
 import Reply from './Reply.vue'
+import User from '../../helpers/User';
 export default {
   props: ['question'],
   components: { Reply },
   created(){
     this.listen();
-    // console.log(this.question);
   },
   methods: {
     listen(){
@@ -41,6 +41,20 @@ export default {
           window.scrollTo(0,0);
         })
       })
+
+      window.Echo.private('App.User.' + User.id())
+        .notification((notification) => {
+          this.question.replies.unshift(notification.reply)
+        });
+
+      window.Echo.channel('deleteReplyChannel')
+        .listen('DeleteReplyEvent', (e) => {
+          for(let index = 0; index < this.question.replies.length; index++){
+            if(this.question.replies[index].id == e.id){
+              this.question.replies.splice(index, 1)
+            }
+          }
+        })
     }
   }
 }

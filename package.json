@@ -26,6 +26,8 @@
     "dependencies": {
         "@ckeditor/ckeditor5-build-classic": "^31.0.0",
         "@ckeditor/ckeditor5-vue2": "^1.0.5",
+        "laravel-echo": "^1.11.3",
+        "pusher-js": "^7.0.3",
         "vue-router": "^3.5.3",
         "vuetify": "^2.5.10"
     }

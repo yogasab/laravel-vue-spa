@@ -12,14 +12,14 @@
       </v-btn>
     </template>
     <v-list>
-      <v-list-item v-for="(unread, i) in unreads" :key="i">
+      <v-list-item v-for="unread in unreads" :key="unread.id">
       <router-link :to="unread.path">
         <v-list-item-title v-html="unread.question" @click="readNotification(unread)">
           {{ unread.question }}
         </v-list-item-title>
       </router-link>
       </v-list-item>
-      <v-list-item v-for="(read, i) in reads" :key="i">
+      <v-list-item v-for="read in reads" :key="read.id">
         <v-list-item-title v-html="read.question">
           {{ read.question }}
         </v-list-item-title>
@@ -49,6 +49,11 @@ export default {
     if(User.loggedIn()){
       this.getNotifications()
     }
+    window.Echo.private('App.User.' + User.id())
+      .notification((notification) => {
+        this.unreads.unshift(notification);
+        this.unreadsCount++;
+      });
   },
   methods: {
     getNotifications(){

@@ -27,7 +27,7 @@ Route::apiResource('question.reply', 'ReplyController');
 Route::post('/like/reply/{reply}', 'LikeController@likeReply')->name('like');
 Route::delete('/like/reply/{reply}', 'LikeController@dislikeReply')->name('dislike');
 Route::post('notifications', 'NotificationController@index');
-Route::post('readNotifications', 'NotificationController@index');
+Route::post('readNotifications', 'NotificationController@readNotifications');
 
 Route::group([
   'prefix' => 'auth'
