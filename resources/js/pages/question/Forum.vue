@@ -8,6 +8,13 @@
           :data=question
         >
         </question>
+        <div class="text-center">
+          <v-pagination
+            v-model="meta.current_page"
+            :length="meta.last_page"
+            @input="paginate"
+          ></v-pagination>
+        </div>
       </v-flex>
       <v-flex xs4>
         <app-sidebar></app-sidebar>
@@ -28,12 +35,26 @@ export default {
   data(){
     return {
       questions: {},
+      page: 2,
+      meta: {}
     }
   },
   created(){
-    Axios.get('api/question')
-    .then(res => this.questions = res.data.data)
-    .catch(err => console.log(err))
+    this.fetchQuestion()
+  },
+  methods: {
+    fetchQuestion(page){
+      let url = page ? `/api/question?page=${page}` : '/api/question'
+      Axios.get(url)
+      .then(res => {
+        this.questions = res.data.data
+        this.meta = res.data.meta
+      })
+      .catch(err => console.log())
+    },
+    paginate(page){
+      this.fetchQuestion(page)
+    }
   }
 }
 </script>
