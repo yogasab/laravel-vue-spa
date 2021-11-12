@@ -15,9 +15,19 @@ class Token {
   }
   // Decode the payload access token 
   decode(payload){
-    return JSON.parse(atob(payload));
+    if(this.isBase64){
+      return JSON.parse(atob(payload));
+    }
+    return false;
   }
   // Check iss on it
+  isBase64(str){
+    try {
+      return btoa(atob(str)).replace(/=/g, "") == str;
+    } catch (error) {
+      return false;
+    }
+  }
 }
 
 export default Token = new Token();

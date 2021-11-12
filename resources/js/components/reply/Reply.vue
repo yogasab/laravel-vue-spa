@@ -7,10 +7,12 @@
           <v-list-item-title v-text="data.user"></v-list-item-title>
           <v-list-item-subtitle
           ></v-list-item-subtitle>
-          <v-list-item-subtitle v-html="data.reply"></v-list-item-subtitle>
+          <v-list-item-subtitle>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis facilis sit quaerat molestiae at temporibus commodi doloribus nostrum odit fugit eos iure, repellat, omnis consequatur inventore eius expedita! Dignissimos, magnam.
+          </v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-action>
-          <v-list-item-action-text v-text="data.created_at"></v-list-item-action-text>
+          <v-list-item-action-text>{{data.created_at}}</v-list-item-action-text>
         </v-list-item-action>
         <v-list-item-action>
           <like :content="data"></like>

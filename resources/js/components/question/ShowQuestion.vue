@@ -51,10 +51,27 @@ export default {
     },
     showReplies(){
       window.scrollTo(0, 700);
+    },
+    listen(){
+      EventBus.$on('newReply', () => {
+        this.data.total_reply++;
+      })
+      window.Echo.private('App.User.' + User.id())
+        .notification((notification) => {
+          this.data.total_reply++;
+        });
+      EventBus.$on('deleteReply', () => {
+        this.data.total_reply--;
+      })
+      window.Echo.channel('deleteReplyChannel')
+      .listen('DeleteReplyEvent', (e) => {
+        this.data.total_reply--;
+      })
     }
   },
-  mounted(){
-    // console.log(this.data);
+  created(){
+    this.listen();
+    console.log(this.data)
   }
 }
 </script>

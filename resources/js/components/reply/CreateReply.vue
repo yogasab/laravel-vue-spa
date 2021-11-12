@@ -28,14 +28,17 @@ export default {
       editor: ClassicEditor,
     }
   },
+  mounted(){
+
+  },
   methods: {
     submit(){
       Axios.post(`/api/question/${this.questionSlug}/reply`, this.form)
         .then(res => {
           this.form.body = '';
           EventBus.$emit('newReply', res.data.data);
-          window.location = `/question/${this.questionSlug}`;
           window.scrollTo(0,0);
+          window.location = `/question/${this.questionSlug}`;
           // console.log(res.data.data.body);
         })
         .catch(err => console.log(err))

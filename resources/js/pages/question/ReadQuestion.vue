@@ -4,7 +4,12 @@
     <show-question v-else :data="question"></show-question>
     <v-container fluid>
       <replies :question=question></replies>
-      <create-reply :questionSlug="question.slug"></create-reply>
+      <create-reply v-if="loggedIn" :questionSlug="question.slug"></create-reply>
+      <div v-else class="mt-4">
+        <router-link style="text-decoration: none;" to="/login">
+          <strong>Login/Register to post</strong>
+        </router-link>
+      </div>
     </v-container>
   </div>
 </template>
@@ -15,6 +20,7 @@ import ShowQuestion from '../../components/question/ShowQuestion.vue';
 import EditQuestion from '../../components/question/EditQuestion.vue';
 import Replies from '../../components/reply/Replies.vue';
 import CreateReply from '../../components/reply/CreateReply.vue';
+import User from '../../helpers/User';
 export default {
   components: { ShowQuestion, EditQuestion, Replies, CreateReply },
   data(){
@@ -26,6 +32,11 @@ export default {
   created(){
     this.listen();
     this.getQuestion();
+  },
+  computed: {
+    loggedIn(){
+      return User.loggedIn();
+    }
   },
   methods: {
     listen(){
