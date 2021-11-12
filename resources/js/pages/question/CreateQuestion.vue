@@ -10,6 +10,7 @@
           type="text" 
           v-model="form.title">
         </v-text-field>
+        <span class="red--text" v-if="errors.title">The title field is required</span>
         <v-select 
           :items="categories" 
           item-text="name" 
@@ -18,9 +19,11 @@
           label="Categories" 
           autocomplete>
         </v-select>
+        <span class="red--text" v-if="errors.category_id">The categories field is required</span>
         <ckeditor :editor="editor" v-model="form.body"></ckeditor>
+        <span class="red--text" v-if="errors.body">The body field is required</span>
         <v-spacer></v-spacer>
-        <v-btn type="submit" color="green">
+        <v-btn type="submit" color="green" class="mt-5">
           Create
         </v-btn>
       </v-col>
@@ -42,7 +45,7 @@ export default {
         body: null
       },
       categories: [],
-      errror: {},
+      errors: {},
       editor: ClassicEditor,
     }
   },
@@ -53,7 +56,7 @@ export default {
   async created(){
     await Axios.get('/api/category')
     .then(res => this.categories = res.data.data)
-    .catch(err => console.log(err))
+    .catch(err => console.log(err.response.data))
   },
   methods: {
     create(){
@@ -63,9 +66,15 @@ export default {
         this.form.category_id = null;
         this.form.body = null;
         this.$router.push(res.data.path)
-        // console.log(res.data)
       })
-      .catch(err => alert(err))
+      .catch(err => {
+        (this.errors = err.response.data.errors)
+      })
+    }
+  }, 
+  computed: {
+    disabled(){
+      return !(this.form.title&&this.form.category_id&&this.form.body)
     }
   }
 }

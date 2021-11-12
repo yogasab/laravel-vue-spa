@@ -11,7 +11,7 @@
         Notifications {{ unreadsCount }}
       </v-btn>
     </template>
-    <v-list v-if="unreadsCount.length">
+    <v-list>
       <v-list-item v-for="unread in unreads" :key="unread.id">
       <router-link :to="unread.path">
         <v-list-item-title v-html="unread.question" @click="readNotification(unread)">
@@ -25,11 +25,13 @@
         </v-list-item-title>
       </v-list-item>
     </v-list>
-    <v-list v-else>
-      <v-list-item>
-        <strong>You have no notification</strong>
-      </v-list-item>
-    </v-list>
+    <!-- <div v-else>
+      <v-list>
+        <v-list-item>
+          <strong>You have no notification</strong>
+        </v-list-item>
+      </v-list>
+    </div> -->
   </v-menu>
 </template>
 

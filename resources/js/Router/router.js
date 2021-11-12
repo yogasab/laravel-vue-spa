@@ -1,16 +1,17 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Login from '../pages/auth/Login.vue'
-import Register from '../pages/auth/Register.vue'
-import Logout from '../pages/auth/Logout.vue'
-import Forum from '../pages/question/Forum.vue'
-import ReadQuestion from '../pages/question/ReadQuestion.vue'
-import CreateQuestion from '../pages/question/CreateQuestion.vue'
-import CreateCategory from '../pages/category/CreateCategory.vue'
-
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Login from '../pages/auth/Login.vue';
+import Register from '../pages/auth/Register.vue';
+import Logout from '../pages/auth/Logout.vue';
+import Forum from '../pages/question/Forum.vue';
+import ReadQuestion from '../pages/question/ReadQuestion.vue';
+import CreateQuestion from '../pages/question/CreateQuestion.vue';
+import CreateCategory from '../pages/category/CreateCategory.vue';
+import Paralax from '../pages/paralax/Paralax.vue';
 Vue.use(VueRouter)
 
 const routes = [
+  {path: '/', component: Paralax},
   {path: '/login', component: Login},
   {path: '/register', component: Register},
   {path: '/logout', component: Logout, name: 'logout'},

@@ -1,13 +1,22 @@
 <template>
   <v-form @submit.prevent="submit">
     <v-container>
+      <v-alert
+        border="left"
+        dense
+        dismissible
+        elevation="7"
+        color="pink darken-1"
+        v-if="errors"
+        dark
+      >The name field is required</v-alert>
       <v-col cols="12" sm="6" md="12">
         <v-text-field 
           label="Category"
           required
           type="text"
           v-model="form.name"/>
-        <v-btn type="submit">
+        <v-btn type="submit" :disabled="disabled">
           Create
         </v-btn>
       </v-col>
@@ -46,6 +55,7 @@ export default {
         name: null
       },
       categories: {},
+      errors: null
     }
   },
   methods: {
@@ -53,7 +63,6 @@ export default {
       axios.post("/api/category", this.form)
         .then(res => {
           this.categories.unshift(res.data.data);
-          // console.log(res.data.data);
           this.form.name = null;
         })
         .catch(error => (this.errors = error.response.data.errors));
@@ -71,6 +80,11 @@ export default {
     Axios.get('/api/category')
       .then(res => this.categories = res.data.data)
       .catch(err => console.log(err.data))
+  },
+  computed: {
+    disabled(){
+      return !(this.form.name)
+    }
   }
 }
 </script>
