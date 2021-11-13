@@ -1,4 +1,4 @@
-# Laravel Single Page Application Vue
+# Laravel Vue Single Page Application 
 
 Made with:
 -   Laravel [Laravel](https://laravel.com/).
